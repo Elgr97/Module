@@ -1,0 +1,20 @@
+price = int()
+tickets = int(input('Ввести нужное количество билетов: '))
+for i in range(tickets):
+    i += 1
+
+    age_ticket = int(input(f'Вести возраст владельца билета №{i}: '))
+    if age_ticket < 18:
+       print('Цена билета - бесплатно')
+    elif 18 <= age_ticket < 25:
+        price += 990
+        print('Цена билета - 990 руб.')
+    else:
+        price += 1390
+        print('Цена билета - 1390 руб.')
+
+if tickets > 3:
+    total_price = price - ((price / 100) * 10)
+    print(f'Сумма к оплате - {total_price} руб. Была применена скидка в 10%')
+else:
+    print(f'Сумма к оплате - {price} руб.')
