@@ -1,0 +1,72 @@
+sequence_numbers = input("Введите последовательность целых чисел через пробел: ")
+
+# Проверка соответствия указанному в условии ввода данных.
+# Функция для определения цифр в строке
+
+def is_int(str):
+    str = str.replace(' ', '')
+    try:
+        int(str)
+        return True
+    except ValueError:
+        return False
+
+if " " not in sequence_numbers:
+    print("Введите последовательность целых чисел через пробел: ")
+    sequence_numbers = input("Введите последовательность целых чисел через пробел: ")
+if not is_int(sequence_numbers):
+    print("Использованны некорректные символы")
+    print("Перезапустите программу!")
+
+#Преобразование введенной последовательности в список
+list_sequence_numbers = list(map(int, sequence_numbers.split()))
+
+print(list_sequence_numbers)
+
+#Сортировка списка по возрастанию элементов (Сортировка пузырьком)
+def bubble_sort(number):
+    swapped = True
+    while swapped:
+        swapped = False
+        for i in range(len(number) - 1):
+            if number[i] > number[i + 1]:
+                number[i], number[i + 1] = number[i + 1], number[i]
+                swapped = True
+
+bubble_sort(list_sequence_numbers)
+
+user_number = int(input("Введите любое целое число: "))
+
+#Установка позиции элемента
+def search(array, element, left, right):
+    try:
+        if left > right:
+            return False
+        middle = (right + left) // 2
+        if array[middle] == element:
+            return middle
+        elif element < array[middle]:
+            return search(array, element, left, middle - 1)
+        else:
+            return search(array, element, middle + 1, right)
+    except IndexError:
+        return "Указанное число не входит в диапазон списка!"
+
+#Устанавливается номер позиции элемента (Индекс элемента)
+print(f'Упорядоченный по возрастанию список: {list_sequence_numbers}')
+
+if not search(list_sequence_numbers, user_number, 0, len(list_sequence_numbers)):
+    rI = min(list_sequence_numbers, key=lambda x: (abs(x - user_number), x))
+    ind = list_sequence_numbers.index(rI)
+    max_ind = ind + 1
+    min_ind = ind - 1
+    if rI < user_number:
+        print(f"В списке нет введенного элемента\nБлижайший меньший элемент: {rI}, его индекс: {ind}\nБлижайший больший элемент: {list_sequence_numbers[max_ind]} его индекс: {max_ind}")
+    elif min_ind < 0:
+        print(f"В списке нет введенного элемента\nБлижайший больший элемент: {rI}, его индекс: {list_sequence_numbers.index(rI)}\nВ списке нет меньшего элемента")
+    elif rI > user_number:
+        print(f"В списке нет введенного элемента\nБлижайший больший элемент: {rI}, его индекс: {list_sequence_numbers.index(rI)}\nБлижайший меньший элемент: {list_sequence_numbers[min_ind]}, его индекс: {min_ind}")
+    elif list_sequence_numbers.index(rI) == 0:
+        print(f"Индекс элемента: {list_sequence_numbers.index(rI)}")
+else:
+    print(f"Индекс элемента: {search(list_sequence_numbers, user_number, 0, len(list_sequence_numbers))}")
